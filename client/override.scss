@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+// Mixins
+@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/_prefixer";
+@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/mixins";
+@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/color";
+
+// Variables;
+$h1-fontsize: 3.00rem;
+$h2-fontsize: 2.25rem;
+$primary-color: rgb(64, 140, 251) !default;
+$primary-color-light: true !default;
+$primary-color-dark: true !default;
+
+@if not $primary-color-light {
+  $primary-color-light: lighten($primary-color, 15%);
+}
+@if not $primary-color-dark {
+  $primary-color-dark: darken($primary-color, 15%);
+}
+$collection-border-color: rgba(0,0,0,0);
+$secondary-color: color("yellow", "lighten-1") !default;
+$success-color: color("green", "base") !default;
+$error-color: color("blue", "base") !default;
+
+$link-color: color("light-blue", "darken-1") !default;
+
+$roboto-font-path: ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/font/roboto/";
+$icons-font-path: ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/font/material-design-icons/";
+
+@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/variables";
+
+// Reset
+@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/normalize";
+
+@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/materialize.scss";
+
+
+
+@each $mdi-icon-name, $mdi-icon-value in $mdi-list-icons {
+  .#{$mdi-prefix}#{$mdi-icon-name}:before {
+    content: "\""+ $mdi-icon-value +"\"";
+  }
+}
+
+html {
+  font-family: GillSans, Calibri, Trebuchet, sans-serif;
+  background-color: $primary-color;
+  color: white;
+}
