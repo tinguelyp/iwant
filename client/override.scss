@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 // Mixins
-@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/_prefixer";
-@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/mixins";
-@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/color";
+@import "../packages/meteor-materialize-sass/bower_components/materialize/sass/components/_prefixer";
+@import "../packages/meteor-materialize-sass/bower_components/materialize/sass/components/mixins";
+@import "../packages/meteor-materialize-sass/bower_components/materialize/sass/components/color";
 
 // Variables;
 $h1-fontsize: 3.00rem;
@@ -26,15 +26,15 @@ $error-color: color("blue", "base") !default;
 
 $link-color: color("light-blue", "darken-1") !default;
 
-$roboto-font-path: ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/font/roboto/";
-$icons-font-path: ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/font/material-design-icons/";
+$roboto-font-path: "../packages/meteor-materialize-sass/bower_components/materialize/font/roboto/";
+$icons-font-path: "../packages/meteor-materialize-sass/bower_components/materialize/font/material-design-icons/";
 
-@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/variables";
+@import "../packages/meteor-materialize-sass/bower_components/materialize/sass/components/variables";
 
 // Reset
-@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/components/normalize";
+@import "../packages/meteor-materialize-sass/bower_components/materialize/sass/components/normalize";
 
-@import ".meteor/local/build/programs/server/assets/packages/yang2007chun_materialize-scss/bower_components/materialize/sass/materialize.scss";
+@import "../packages/meteor-materialize-sass/bower_components/materialize/sass/materialize.scss";
 
 
 
