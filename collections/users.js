@@ -59,6 +59,10 @@ UserSchema = new SimpleSchema({
   },
   "roles.$": {
     type: String
+  },
+  tags: {
+    type: [Tags],
+    optional: true
   }
 });
 
