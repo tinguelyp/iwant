@@ -13,3 +13,8 @@ Router.route('/items/new', {
 Router.plugin('ensureSignedIn', {
   only: ['dashboard']
 });
+
+Router.route('/map', {
+  name: 'map'
+});
+
