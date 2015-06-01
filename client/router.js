@@ -28,9 +28,11 @@ Router.map(function() {
     layoutTemplate:'layoutNoContainer'
   });
 
-  this.route('jobs', {
-    path: '/jobs'
+  this.route('map', {
+    path: '/map'
   });
+
+
   //
   // this.route('myJobs', {
   //   path: '/myjobs',
