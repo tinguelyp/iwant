@@ -20,6 +20,7 @@ raix:handlebar-helpers
 mrt:moment
 aldeed:autoform
 aldeed:collection2
+<<<<<<< HEAD
 multiply:iron-router-progress
 pauli:accounts-linkedin
 datariot:ganalytics
@@ -54,3 +55,10 @@ ongoworks:speakingurl
 bevanhunt:leaflet
 chriswessels:hammer
 hedcet:touch-swipe
+=======
+gildaspk:autoform-materialize
+gildaspk:autoform-file-materialize
+fourseven:scss
+yang2007chun:materialize-scss
+bevanhunt:leaflet
+>>>>>>> aa15bf49ca8154b65c0a456180f7255a5bb5dd18
