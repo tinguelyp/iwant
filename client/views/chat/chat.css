@@ -1,0 +1,23 @@
+footer {
+  display: none !important;
+}
+
+#content-wrapper {
+  overflow: scroll;
+  overflow-x: hidden;
+  height: calc(100vh - 60px - 100px);
+  margin-bottom: 60px;
+}
+
+.navbar-fixed-bottom {
+  border-width: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+.blockquote-success {
+  border-color: #468847 !important;
+}
+
+.blockquote-info {
+  border-color: #3a87ad !important;
+}
