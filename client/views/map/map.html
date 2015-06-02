@@ -1,9 +1,23 @@
 <template name="map">
+
+  
+  {{#HammerTouchArea gestureMap=templateGestures}}
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <div id="container">
-    <div id="map" class="map"></div>
-  </div>
-  <div class="slider">
-    <input type='range' max='14' step='1' value='9'/>
-  </div>
+    <div class="wrapper">
+
+      <div class="slider">
+        <input type='range' max='14' step='1' value='9'/>
+      </div>
+
+      <div id="container">
+        <div id="map" class="map"></div>
+      </div>
+
+    
+
+    </div>
+
+  {{/HammerTouchArea}}
+
 </template>
