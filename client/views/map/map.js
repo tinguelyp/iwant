@@ -6,8 +6,15 @@ var circle ;
 var circle_size = 200 ;
 var init_pos = true ;
 
+Template.map.events({
+    "click .next": function () {
+      Session.set("rayon", circle_size);
+      alert("rayon set") ;
+    }
+});
+
+
 Template.map.rendered = function() {
-  
   
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
@@ -20,7 +27,7 @@ Template.map.rendered = function() {
   L.tileLayer.provider('Thunderforest.Outdoors').addTo(map);
   // L.marker(latlng).addTo(map) ;
   // circle = L.circle(latlng, circle_size).addTo(map);
-  map.locate({setView: true, watch: false}) ;
+  map.locate({setView: true, watch: false, timeout: 3000}) ;
   
 
 
@@ -76,12 +83,6 @@ Template.map.rendered = function() {
   //   loadMap('map');
 
 
-
-
-
-
-
-
   $(window).resize(function () { $mc = $('#map'); $mc.css('height', '100vh'); }).resize();
 
   this.$(".wrapper").swipe( {
@@ -95,9 +96,6 @@ Template.map.rendered = function() {
   });
 
 };
-
-
-
 
 
 changeCircle = function(direction) {
