@@ -12,20 +12,24 @@ Template.accept.rendered = function() {
 
   var map = L.map('map', {
     doubleClickZoom: false
-  }).setView([46.975260, 7.470861], 15);
+  }); //.setView([46.975260, 7.470861], 15);
   L.tileLayer.provider('Thunderforest.Outdoors').addTo(map);
 
   map.locate({
-    setView: true,
+    setView: false,
     watch: false
   });
   map.on('locationfound', function(event) {
     //marker you
     var marker_you = L.marker([event.latitude, event.longitude]).addTo(map);
-    marker_you.bindPopup(L.popup().setContent('<p>You</p>')).openPopup();
+    marker_you.bindPopup(L.popup().setContent('<p>You</p>'));
     // marker needer
     var marker_needer = L.marker([46.973738, 7.472458]).addTo(map); //TODO take position from yourself geolocalisation!
-    marker_needer.bindPopup(L.popup().setContent('<p>Samantha</p>')); //TODO take name from needer profile
+    marker_needer.bindPopup(L.popup().setContent('<p>Samantha</p>')).openPopup(); //TODO take name from needer profile
+
+    var group = new L.featureGroup([marker_you, marker_needer]);
+
+    map.fitBounds(group.getBounds());
   });
 
   // Resize map

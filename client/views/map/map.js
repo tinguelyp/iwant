@@ -1,105 +1,121 @@
+var latlng = L.latLng(46.9749, 7.4705);
 
-test_global = "global" ;
-var latlng = L.latLng(46.9753, 7.47025) ;
-var map ;
-var circle ;
-var circle_size = 200 ;
+var map;
+var circle;
+var circle_size = 200;
+var init_pos = true;
+
+Template.map.events({
+  "click .next": function() {
+    Session.set("rayon", circle_size);
+    alert("rayon set");
+  }
+});
+
 
 Template.map.rendered = function() {
+
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
-  //latlng = L.latLng(46.9753, 7.47025) ;
   map = L.map('map', {
     doubleClickZoom: false,
     touchZoom: false,
     dragging: false
-  }).setView(latlng, 13);
+  }).setView(latlng, 15);
 
-  //alert("mm");
   L.tileLayer.provider('Thunderforest.Outdoors').addTo(map);
-  L.marker(latlng).addTo(map) ;
-  circle = L.circle(latlng, circle_size).addTo(map);
-  var h = $(window).height(), offsetTop = 90; 
-  $mc = $('#map'); 
-  $mc.css('height', (h - offsetTop)).resize() ;
-  
-  map.invalidateSize() ;
-  
+  // L.marker(latlng).addTo(map) ;
+  // circle = L.circle(latlng, circle_size).addTo(map);
+  map.locate({
+    setView: true,
+    watch: false,
+    // timeout: 3000
+  });
 
-   // map.on('click', function(event) {
-   //   console.log(event.latlng);
-   // });
 
-  // var query = Markers.find();
-  // query.observe({
-  //   added: function (document) {
-  //     var marker = L.marker(document.latlng).addTo(map)
-  //       .on('click', function(event) {
-  //         map.removeLayer(marker);
-  //         Markers.remove({_id: document._id});
+
+  map.on('locationfound', function(event) {
+    console.log(event);
+    if (init_pos) {
+      latlng.lat = event.latitude;
+      latlng.lng = event.longitude;
+      L.marker([event.latitude, event.longitude]).addTo(map);
+      circle = L.circle([event.latitude, event.longitude], circle_size).addTo(map);
+      console.log(circle);
+      init_pos = false;
+      map.setZoom(14);
+    }
+  });
+
+  map.on('locationerror', function(event) {
+    alert("Location access denied.")
+  });
+
+  $mc = $('#map');
+  $mc.css('height', '100vh');
+  map.invalidateSize();
+
+  // var loadMap = function (id) {
+  //   var HELSINKI = [60.1708, 24.9375];
+  //   map = L.map(id);
+  //   var tile_url = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+  //   var layer = L.tileLayer(tile_url, {
+  //       attribution: 'OSM'
+  //   });
+  //   map.addLayer(layer);
+  //   map.setView(HELSINKI, 19);
+
+  //   map.locate({setView: true, watch: true}) /* This will return map so you can do chaining */
+  //       .on('locationfound', function(e){
+  //           var marker = L.marker([e.latitude, e.longitude]).bindPopup('Your are here :)');
+  //           var circle = L.circle([e.latitude, e.longitude], e.accuracy/2, {
+  //               weight: 1,
+  //               color: 'blue',
+  //               fillColor: '#cacaca',
+  //               fillOpacity: 0.2
+  //           });
+  //           map.addLayer(marker);
+  //           map.addLayer(circle);
+  //       })
+  //      .on('locationerror', function(e){
+  //           console.log(e);
+  //           alert("Location access denied.");
   //       });
-  //   },
-  //   removed: function (oldDocument) {
-  //     layers = map._layers;
-  //     var key, val;
-  //     for (key in layers) {
-  //       val = layers[key];
-  //       if (val._latlng) {
-  //         if (val._latlng.lat === oldDocument.latlng.lat && val._latlng.lng === oldDocument.latlng.lng) {
-  //           map.removeLayer(val);
-  //         }
-  //       }
-  //     }
-  //   }
-  // });
+  //   };
+
+  //   loadMap('map');
 
 
+  $(window).resize(function() {
+    $mc = $('#map');
+    $mc.css('height', '100vh');
+  }).resize();
 
-$(window).resize(function () { var h = $(window).height(), offsetTop = 90; $mc = $('#map'); $mc.css('height', (h - offsetTop)); }).resize();
+  this.$(".wrapper").swipe({
+
+    swipeUp: function(event, direction, distance, duration, fingerCount, fingerData) {
+      changeCircle("up");
+    },
+    swipeDown: function(event, direction, distance, duration, fingerCount, fingerData) {
+      changeCircle("down");
+    }
+  });
 
 };
 
-Template.map.events({
- 'change input[type="range"]': function(e,t) {
-
-  //var latlng = L.latLng(46.9753, 7.47025) ;
-    map.removeLayer(circle);
-   // map.removeLayer(map.circle);
-   L.circle(latlng, 400).addTo(map);
-
-
-  console.log(latlng);
-  //alert(test_global) ;
- }
-})
-
-
- Template.map.onRendered(function () {
-   this.$(".wrapper").swipe( {
-
-     swipeUp: function(event, direction, distance, duration, fingerCount, fingerData) {
-        console.log("swipe_left");
-        changeCircle("up") ;
-
-     },
-     swipeDown: function(event, direction, distance, duration, fingerCount, fingerData) {
-        console.log("swipe_right");
-        changeCircle("down") ;
-     }
-   });
-});
 
 changeCircle = function(direction) {
+  console.log("changeCircle");
+  map.removeLayer(circle);
+  direction == "up" ? (circle_size *= 150 / 100) : (circle_size *= 80 / 100);
+  if (circle_size <= 200) {
+    circle_size = 200;
+  }
+  console.log(circle_size);
 
-   map.removeLayer(circle);
-   var change = circle_size ;
+  circle = L.circle(latlng, circle_size).addTo(map);
 
-   direction == "up" ? (circle_size *= 150/100) : (circle_size  *= 80/100) ; 
-   // direction == "up" ? circle_size += change : circle_size -= change ; 
-   // map.removeLayer(map.circle);
-   circle = L.circle(latlng, circle_size).addTo(map);
-    
+  console.log(circle);
+
+
 }
-
-
-
