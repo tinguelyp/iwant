@@ -1,0 +1,31 @@
+<template name="chat">
+
+  <div class="content-chat">
+    {{#each messages}}
+      <div class="row">
+
+        {{#if currentUserMessage userId }}
+
+          <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
+            <blockquote class="blockquote-reverse text-success blockquote-success">
+              <p>{{content}}<small>{{formatTime createdAt}}</small></p>
+            </blockquote>
+          </div>
+
+        {{else}}
+
+          <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
+            <blockquote class="text-info blockquote-info">
+              <p>{{content}}<small>{{formatTime createdAt}}</small></p>
+            </blockquote>
+          </div>
+
+        {{/if}}
+
+      </div>
+    {{/each}}
+  </div>
+
+  {{> chat_footer}}
+
+</template>
