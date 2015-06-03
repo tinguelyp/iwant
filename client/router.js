@@ -20,13 +20,22 @@ var subs = new SubsManager({
 Router.map(function() {
   this.route('home', {
     path: '/',
-    layoutTemplate:'layoutNoContainer'
+    layoutTemplate: 'layoutNoContainer'
   });
 
-  this.route('accept',{
-    path: '/accept'
+  this.route('accept', {
+    path: '/accept/:_id',
+
+    data: function() {
+      return Wants.findOne({
+        _id: this.params._id
+      });
+    },
+    waitOn: function() {
+      return subs.subscribe('wants');
+    }
   });
-  this.route('chat',{
+  this.route('chat', {
     path: '/chat'
   });
 
@@ -37,4 +46,6 @@ Router.map(function() {
 
 });
 
-Router.plugin('dataNotFound', {notFoundTemplate: 'notFound'});
+Router.plugin('dataNotFound', {
+  notFoundTemplate: 'notFound'
+});
