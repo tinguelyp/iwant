@@ -15,6 +15,14 @@ Template.map.events({
 
 Template.map.rendered = function() {
 
+  var iWantIcon = L.icon({
+      iconUrl: 'images/favicons/favicon-32x32.png',
+      iconRetinaUrl: 'images/favicons/favicon-32x32.png',
+      iconSize: [32, 32],
+      iconAnchor: [22, 94],
+      popupAnchor: [-3, -76]
+  });
+
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
   map = L.map('map', {
@@ -32,14 +40,14 @@ Template.map.rendered = function() {
     // timeout: 3000
   });
 
-
+ 
 
   map.on('locationfound', function(event) {
     console.log(event);
     if (init_pos) {
       latlng.lat = event.latitude;
       latlng.lng = event.longitude;
-      L.marker([event.latitude, event.longitude]).addTo(map);
+      L.marker([event.latitude, event.longitude], {icon: iWantIcon}).addTo(map);
       circle = L.circle([event.latitude, event.longitude], circle_size).addTo(map);
       console.log(circle);
       init_pos = false;
@@ -54,6 +62,7 @@ Template.map.rendered = function() {
   $mc = $('#map');
   $mc.css('height', '100vh');
   map.invalidateSize();
+
 
   // var loadMap = function (id) {
   //   var HELSINKI = [60.1708, 24.9375];
