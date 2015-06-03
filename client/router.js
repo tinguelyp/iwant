@@ -27,9 +27,20 @@ Router.map(function() {
     path: '/map'
   });
 
+  this.route('accept', {
+    path: '/accept/:_id',
+
+    data: function() {
+      return Wants.findOne({
+        _id: this.params._id
+      });
+    },
+    waitOn: function() {
+      return subs.subscribe('wants');
+    }
+  });
   this.route('chat', {
     path: '/chat',
-
     waitOn: function() {
       return this.subscribe('messages');
     },
@@ -37,8 +48,8 @@ Router.map(function() {
     onBeforeAction: function(pause) {
       AccountsTemplates.ensureSignedIn.call(this, pause);
     }
-  });
 
+  });
 });
 
 Router.plugin('dataNotFound', {
