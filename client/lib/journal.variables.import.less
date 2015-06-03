@@ -14,7 +14,7 @@
 @gray-light:             lighten(@gray-base, 60%);   // #999
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:         #000000;
+@brand-primary:         #428bca;
 @brand-success:         #22B24C;
 @brand-info:            #369;
 @brand-warning:         #F5E625;
@@ -26,12 +26,12 @@
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-@body-bg:               #fff;
+@body-bg:               white;
 //** Global text color on `<body>`.
-@text-color:            @gray;
+@text-color:            @gray-base;
 
 //** Global textual link color.
-@link-color:            @brand-primary;
+@link-color:            white;
 //** Link hover color set via `darken()` function.
 @link-hover-color:      darken(@link-color, 15%);
 //** Link hover decoration.
@@ -135,7 +135,7 @@
 @table-bg-active:               @table-bg-hover;
 
 //** Border color for table and cell borders.
-@table-border-color:            #ddd;
+@table-border-color:            #eee;
 
 
 //== Buttons
@@ -696,18 +696,18 @@
 //
 //##
 
-@panel-bg:                    #fff;
+@panel-bg:                    #428bca;
 @panel-body-padding:          15px;
 @panel-heading-padding:       10px 15px;
 @panel-footer-padding:        @panel-heading-padding;
 @panel-border-radius:         @border-radius-base;
 
 //** Border color for elements within panels
-@panel-inner-border:          #ddd;
+@panel-inner-border:          #eee;
 @panel-footer-bg:             #f5f5f5;
 
 @panel-default-text:          @text-color;
-@panel-default-border:        #ddd;
+@panel-default-border:        #eee;
 @panel-default-heading-bg:    #f5f5f5;
 
 @panel-primary-text:          #fff;

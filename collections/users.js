@@ -6,6 +6,18 @@ UserProfileSchema = new SimpleSchema({
     label: "Full Name",
     max: 64,
     optional: true
+  },
+  tags: {
+    type: String,
+    label: "Tags",
+    optional: true
+    // autoform: {
+    //   type: "selectize",
+    //   afFieldInput: {
+    //     multiple: true,
+    //     selectizeOptions: {}
+    //   }
+    // }
   }
 });
 

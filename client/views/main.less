@@ -25,13 +25,24 @@ h5 {
   margin-top: 10px;
 }
 
-@media screen and (min-width: 768px) {
-  .nav > li > p {
-    padding: 15px;
-  }
-  #content-wrapper > div.jumbotron a.col-sm-4 {
-    margin-top: 0;
-  }
+.selectize-input{
+  padding: 0px !important;
+  border: 0px;
+  box-shadow: inset 0 0 0px #fff;
+}
+
+.selectize-input:focus {
+  box-shadow: inset 0 0 0px #fff;
+}
+
+@media screen and (min-width:768px) {
+    .nav > li > p {
+        padding: 15px;
+    }
+
+    #content-wrapper > div.jumbotron a.col-sm-4 {
+        margin-top: 0;
+    }
 }
 
 #callToAction {
@@ -45,17 +56,15 @@ h5 {
   text-align: center;
 }
 
-nav.navbar,
-.btn,
-li a,
-.input-group-addon,
-.jumbotron,
-.panel,
-.label {
+nav.navbar {
   border-radius: 0px !important;
 }
 
-.form-control {
+.btn, li a, .input-group-addon, .jumbotron, .panel, .label{
+  border-radius: 0px !important;
+}
+
+.form-control{
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
@@ -83,9 +92,8 @@ footer {
   padding: 20px 0px 20px 0px;
 }
 
-footer,
-.jumbotron {
-  background-color: rgb(64, 140, 251);
+footer, .jumbotron{
+    background-color: @brand-primary;
   color: white;
 }
 

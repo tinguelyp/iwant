@@ -32,15 +32,15 @@
 					<ul class="nav navbar-nav navbar-right">
 						{{#if currentUser}}
 							<li id="user-drop-down" class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-									{{> avatar user=currentUser size="small"}}{{currentUserDisplayName}} <span class="caret"></span>
+								<a class="dropdown-toggle" data-toggle="dropdown" href="{{pathFor 'profile'}}">
+									{{> avatar user=currentUser size="small"}}{{currentUserDisplayName}}
 								</a>
 								<ul class="dropdown-menu" role="menu">
 									<li>
-										<!-- <a href="{{pathFor 'myJobs'}}"><i class="fa fa-building fa-fw"></i> My Posted Jobs</a> -->
+										<a href="{{pathFor 'profiles'}}"><i class="fa fa-building fa-fw"></i>My iWants</a>
 									 </li>
 									<li class="divider"></li>
-									{{#if isInRole 'admin'}}
+									<!-- {{#if isInRole 'admin'}}
 										<li><a href="/admin"><i class="fa fa-cogs fa-fw"></i> Admin</a></li>
 										<li class="divider"></li>
 									{{/if}}
@@ -50,9 +50,9 @@
 										</li>
 									{{else}}
 										<li>
-											<!-- <a href="{{pathFor 'profileNew'}}"><i class="fa fa-rocket fa-fw"></i> Create Developer Profile</a> -->
+											<a href="{{pathFor 'profileNew'}}"><i class="fa fa-rocket fa-fw"></i> Create Developer Profile</a>
 										</li>
-									{{/if}}
+									{{/if}} -->
 									<li>
 										<a href="#" id="userProfile"><i class="fa fa-user fa-fw"></i> User Profile</a>
 									 </li>
