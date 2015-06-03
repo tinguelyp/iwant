@@ -120,13 +120,24 @@ Meteor.publish("jobs", function() {
   ];
 });
 
-Meteor.publish("my_jobs", function() {
+Meteor.publish("home", function() {
   check(arguments, [Match.Any]);
   if (this.userId) {
     return [
-      Jobs.find({
-        userId: this.userId
-      })
+      Users.find({
+        _id: this.userId
+      }, {
+        fields: {
+          "emailHash": true,
+          "services.facebook.id": true,
+          "services.twitter.profile_image_url": true,
+          "services.facebook.id": true,
+          "services.google.picture": true,
+          "services.github.username": true,
+
+        }
+      }),
+      Tags.find()
     ];
   }
   this.ready();
@@ -144,14 +155,15 @@ Meteor.publish("job", function(jobId) {
 Meteor.publishComposite('profile', function(profileId) {
   return {
     find: function() {
-      return Profiles.find({
-        _id: profileId
+      return Tags.find({
+        name: profileId
       })
     },
     children: [{
       find: function(profile) {
+        console.log(profile);
         return Users.find({
-          _id: profile.userId
+          'profile.tags': {$regex : new RegExp(profile.name, "i") }
         }, {
           fields: {
             "emailHash": true,
@@ -170,21 +182,8 @@ Meteor.publishComposite('profile', function(profileId) {
 Meteor.publish("profiles", function() {
   check(arguments, [Match.Any]);
   return [
-    Profiles.find({
-    	status: "active"
+    Tags.find({
     }, {
-      fields: {
-        userId: true,
-        title: true,
-        location: true,
-        availableForHire: true,
-        randomSorter: true,
-        type: true,
-        name: true,
-        userName: true,
-        status:true,
-        customImageUrl:true
-      }
     }),
     Users.find({  //this may publish users for not active status profiles - could be resolved with publish composite, but performance is slow with so many children lookups
       isDeveloper: true
