@@ -49,7 +49,7 @@ Meteor.publish("homeJobs", function() {
         updatedAt: true,
         remote: true,
         jobtype: true,
-        status:true
+        status: true
       }
     })
   ];
@@ -58,7 +58,7 @@ Meteor.publish("homeJobs", function() {
 Meteor.publishComposite('homeDevelopers', {
   find: function() {
     return Profiles.find({
-    	status: "active"
+      status: "active"
     }, {
       sort: {
         availableForHire: -1,
@@ -74,8 +74,8 @@ Meteor.publishComposite('homeDevelopers', {
         type: true,
         name: true,
         userName: true,
-        status:true,
-        customImageUrl:true
+        status: true,
+        customImageUrl: true
       }
     });
   },
@@ -114,7 +114,7 @@ Meteor.publish("jobs", function() {
         updatedAt: true,
         remote: true,
         jobtype: true,
-        status:true
+        status: true
       }
     })
   ];
@@ -182,10 +182,12 @@ Meteor.publishComposite('profile', function(profileId) {
 Meteor.publish("profiles", function() {
   check(arguments, [Match.Any]);
   return [
+
     Tags.find({
     }, {
+
     }),
-    Users.find({  //this may publish users for not active status profiles - could be resolved with publish composite, but performance is slow with so many children lookups
+    Users.find({ //this may publish users for not active status profiles - could be resolved with publish composite, but performance is slow with so many children lookups
       isDeveloper: true
     }, {
       fields: {
@@ -197,5 +199,14 @@ Meteor.publish("profiles", function() {
         "services.github.username": true
       }
     })
+  ];
+});
+
+
+
+Meteor.publish("wants", function() {
+  check(arguments, [Match.Any]);
+  return [
+    Wants.find({}, {})
   ];
 });

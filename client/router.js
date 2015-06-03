@@ -17,11 +17,6 @@ var subs = new SubsManager({
   expireIn: 5
 });
 
- // Subscriptions on collections/publications
-// Meteor.subscribe("userData");
-// Meteor.subscribe("jobCount");
-// Meteor.subscribe("developerCount");
-
 Router.map(function() {
   this.route('home', {
     path: '/',
@@ -43,9 +38,10 @@ Router.map(function() {
     }
   });
 
-  this.route('jobs', {
-    path: '/jobs'
+  this.route('map', {
+    path: '/map'
   });
+
   //
   // this.route('myJobs', {
   //   path: '/myjobs',
@@ -175,20 +171,36 @@ Router.map(function() {
   // this.route('experts/:_id', function(){
   //   this.redirect("profile", {_id:this.params._id});
   // });
-}); // END OF Router.map(function() {
 //
 // Router.onBeforeAction(AccountsTemplates.ensureSignedIn, {
 //   only: ['profileEdit', 'profileNew', 'jobEdit', 'jobNew']
 // });
 
-//
-// Router.onBeforeAction(function(){
-//   loadUploadcare();
-//   this.next();
-// },{only:['profileEdit','profileNew','jobEdit','jobNew']});
+  this.route('accept', {
+    path: '/accept/:_id',
 
-Router.plugin('dataNotFound', {notFoundTemplate: 'notFound'});
-//
-// Router.onRun(function() {
-//   GAnalytics.pageview();
-// });
+    data: function() {
+      return Wants.findOne({
+        _id: this.params._id
+      });
+    },
+    waitOn: function() {
+      return subs.subscribe('wants');
+    }
+  });
+  this.route('chat', {
+    path: '/chat',
+    waitOn: function() {
+      return this.subscribe('messages');
+    },
+
+    onBeforeAction: function(pause) {
+      AccountsTemplates.ensureSignedIn.call(this, pause);
+    }
+
+  });
+}); // END OF Router.map(function() {
+
+Router.plugin('dataNotFound', {
+  notFoundTemplate: 'notFound'
+});
