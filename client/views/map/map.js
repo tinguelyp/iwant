@@ -5,15 +5,76 @@ var circle;
 var circle_size = 200;
 var init_pos = true;
 
+
 Template.map.events({
-  "click .next": function() {
-    Session.set("rayon", circle_size);
-    alert("rayon set");
+	'click #iWantMap': function(event, template){
+    submitWant(event, template);
+  },
+  'keypress #iWantTag':  function(event, template){
+    enterWant(event);
   }
 });
 
+var submitWant = function(event, template){
+  event.preventDefault();
+  console.log($('#iWantTag').val());
+  Wants.insert({needer: Meteor.userId(), tag: $('#iWantTag').val().toLowerCase(), rayon: Session.get('rayon'), geo: {lat: Session.get('lat'), lng: Session.get('lng')}});
+  $('#iWantTag').val('');
+  // Router.go("/newTag");
+}
+
+var enterWant = function(event){
+  if(event.which == 13){
+    event.preventDefault();
+    submitWant(event);
+  }
+}
+
+//
+// AutoForm.addHooks(['insertWants'], {
+// 	after: {
+// 		insert: function(error, result) {
+// 			if (error) {
+// 				console.log(error);
+// 			} else {
+// 				GAnalytics.event("userProfile", "edit", getUserName(Meteor.user()));
+// 				Modal.hide("userProfile");
+// 			}
+// 		}
+// 	}
+// });
 
 Template.map.rendered = function() {
+//
+//   // Get an array of the existing tags
+//   var tagOptions = Tags.find().fetch();
+//
+//   $('#tags').selectize({
+//       delimiter: ',',
+//       persist: false,
+//       valueField: 'name',
+//       labelField: 'name',
+//       searchField: 'name',
+//       create: true, // TODO: Add entries to Tags collection.
+//       highlight: true,
+//       maxOptions: 5,
+//       // options: tagOptions,
+//       onItemAdd: function (item) {
+// 					item = item.toLowerCase();
+//           // Check to see if tag exists in Tags collection
+//           // by querying the database for the tag name
+//           // and checking the length of the result
+//           var existingTag = Tags.find({"name": {$regex : new RegExp(item, "i") }}).fetch().length;
+//           console.log(existingTag);
+//           if (!existingTag) {
+//               // Add the tag to the Tags collection
+//               // TODO: figure out how to limit duplicate tags
+//               // e.g. 'Beans' and 'beans'
+//               // unless this is not an issue
+//               Tags.insert({"name": item.toLowerCase()});
+//           }
+//       }
+// });
 
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
@@ -21,7 +82,7 @@ Template.map.rendered = function() {
     doubleClickZoom: false,
     touchZoom: false,
     dragging: false
-  }).setView(latlng, 15);
+  }).setView(latlng, 14);
 
   L.tileLayer.provider('Thunderforest.Outdoors').addTo(map);
   // L.marker(latlng).addTo(map) ;
@@ -42,17 +103,19 @@ Template.map.rendered = function() {
       L.marker([event.latitude, event.longitude]).addTo(map);
       circle = L.circle([event.latitude, event.longitude], circle_size).addTo(map);
       console.log(circle);
+      Session.set('lat', latlng.lat);
+      Session.set('lng', latlng.lng);
       init_pos = false;
-      map.setZoom(14);
+      map.setZoom(12);
     }
   });
 
   map.on('locationerror', function(event) {
-    alert("Location access denied.")
+    // alert("Location access denied.")
   });
 
   $mc = $('#map');
-  $mc.css('height', '100vh');
+  // $mc.css('height', '100vh');
   map.invalidateSize();
 
   // var loadMap = function (id) {
@@ -86,12 +149,12 @@ Template.map.rendered = function() {
   //   loadMap('map');
 
 
-  $(window).resize(function() {
-    $mc = $('#map');
-    $mc.css('height', '100vh');
-  }).resize();
+  // $(window).resize(function() {
+  //   $mc = $('#map');
+  //   $mc.css('height', '100vh');
+  // }).resize();
 
-  this.$(".wrapper").swipe({
+  this.$(".map").swipe({
 
     swipeUp: function(event, direction, distance, duration, fingerCount, fingerData) {
       changeCircle("up");
@@ -111,6 +174,8 @@ changeCircle = function(direction) {
   if (circle_size <= 200) {
     circle_size = 200;
   }
+  Session.set("rayon", circle_size);
+  console.log("HOI")
   console.log(circle_size);
 
   circle = L.circle(latlng, circle_size).addTo(map);

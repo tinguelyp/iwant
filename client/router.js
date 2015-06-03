@@ -99,12 +99,17 @@ Router.map(function() {
   //   }
   // });
   //profiles: Tags.find({'name': { $regex : Users.findOne({_id: Meteor.userId()}).profile.tags, $options:"i" }}, {
-  this.route('profiles', {
-    path: '/profiles',
+  this.route('wants', {
+    path: '/wants',
     data: function() {
-      console.log(Users.findOne({_id: Meteor.userId()}).profile.tags.split(","));
+      console.log("DATA PUTAIN !!!!!");
+      if(Users.findOne({_id: Meteor.userId()}).profile.tags == undefined){
+        this.redirect("home");
+        Modal.show('userProfile');
+        return;
+      }
       return {
-        profiles: Tags.find({'name': { $in : Users.findOne({_id: Meteor.userId()}).profile.tags.split(",") }}, {
+        wants: Wants.find({'tag': { $in : Users.findOne({_id: Meteor.userId()}).profile.tags.split(",") }}, {
           sort: {
             randomSorter: 1
           }
@@ -112,7 +117,7 @@ Router.map(function() {
       };
     },
     waitOn: function() {
-      return subs.subscribe('profiles');
+      return subs.subscribe('wants');
     }
   });
 
@@ -120,8 +125,8 @@ Router.map(function() {
     path: '/profiles/:slug?',
     data: function() {
       return Tags.findOne({
-          name: this.params.slug
-        });
+        name: this.params.slug
+      });
     },
     waitOn: function() {
       return subs.subscribe('profile', this.params.slug);

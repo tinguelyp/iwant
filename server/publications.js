@@ -179,34 +179,14 @@ Meteor.publishComposite('profile', function(profileId) {
   }
 });
 
-Meteor.publish("profiles", function() {
-  check(arguments, [Match.Any]);
-  return [
-
-    Tags.find({
-    }, {
-
-    }),
-    Users.find({ //this may publish users for not active status profiles - could be resolved with publish composite, but performance is slow with so many children lookups
-      isDeveloper: true
-    }, {
-      fields: {
-        "emailHash": true,
-        "services.facebook.id": true,
-        "services.twitter.profile_image_url": true,
-        "services.facebook.id": true,
-        "services.google.picture": true,
-        "services.github.username": true
-      }
-    })
-  ];
-});
-
-
-
 Meteor.publish("wants", function() {
   check(arguments, [Match.Any]);
   return [
-    Wants.find({}, {})
+    Wants.find({
+      needer: { $ne: this.userId },
+      giver: null
+    }, {
+    }),
+    Users.find({})
   ];
 });

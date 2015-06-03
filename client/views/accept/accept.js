@@ -9,9 +9,14 @@ Template.accept.rendered = function() {
 
   // Display Map
   L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images';
+  var marker_you;
+  var marker_needer;
+  var group;
 
   var map = L.map('map', {
-    doubleClickZoom: false
+    doubleClickZoom: false,
+    touchZoom: false,
+    dragging: false
   }); //.setView([46.975260, 7.470861], 15);
   L.tileLayer.provider('Thunderforest.Outdoors').addTo(map);
 
@@ -19,24 +24,30 @@ Template.accept.rendered = function() {
     setView: false,
     watch: false
   });
-  map.on('locationfound', function(event) {
-    //marker you
-    var marker_you = L.marker([event.latitude, event.longitude]).addTo(map);
-    marker_you.bindPopup(L.popup().setContent('<p>You</p>'));
-    // marker needer
-    var marker_needer = L.marker([46.973738, 7.472458]).addTo(map); //TODO take position from yourself geolocalisation!
-    marker_needer.bindPopup(L.popup().setContent('<p>Samantha</p>')).openPopup(); //TODO take name from needer profile
 
-    var group = new L.featureGroup([marker_you, marker_needer]);
 
-    map.fitBounds(group.getBounds());
+  Wants.find(this.data._id).observe({
+    added: function(item) {
+      console.log("ITEM ADD");
+      console.log(item);
+      marker_needer = L.marker([item.geo.lat, item.geo.lng]).addTo(map); //TODO take position from yourself geolocalisation!
+      marker_needer.bindPopup(L.popup().setContent('<p>'+Users.findOne(item.needer).profile.name+'</p>')).openPopup(); //TODO take name from needer profile
+    }
   });
 
-  // Resize map
-  $mc = $('#map');
-  $mc.css('height', "50vh").resize();
+  map.on('locationfound', function(event) {
+    //marker you
+    marker_you = L.marker([event.latitude, event.longitude]).addTo(map);
+    marker_you.bindPopup(L.popup().setContent('<p>You</p>'));
 
-  map.invalidateSize();
+    // Resize map
+    $mc = $('#map');
+    $mc.css('height', "50vh").resize();
+
+    map.invalidateSize();
+    group = new L.featureGroup([marker_you, marker_needer]);
+    map.fitBounds(group.getBounds());
+  });
 };
 
 Template.accept.helpers({

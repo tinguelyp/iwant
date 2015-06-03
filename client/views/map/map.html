@@ -1,18 +1,20 @@
 <template name="map">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <div class="wrapper">
-      <div class="button_next">
-           <nav>
-            <ul class="pager">
-              <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
-            </ul>
-          </nav>
+  <!-- <div class="button_next">
+      <ul class="pager">
+        {{#autoForm id="insertWants" collection="Wants" doc=this type="insert"}}
+          {{> afQuickField id="map_tags" name='tag' placeholder="Coffee Boobs"}}
+            <div>
 
-      </div>
+                <button id="cancel" class="btn btn-default">Cancel</button>
+            </div>
+        {{/autoForm}}
+        <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+      </ul>
 
-      <div id="container">
-        <div id="map" class="map"></div>
-      </div>
+  </div> -->
 
+    <div id="map" class="map">
+      <input id="iWantTag" class="form-control" type="text" placeholder="Coffee Boobs">
+      <button type="submit" id="iWantMap" class="btn btn-primary iWantMap">iWant</button>
     </div>
 </template>

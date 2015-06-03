@@ -2,26 +2,30 @@ Wants = new Mongo.Collection("wants");
 
 Wants.attachSchema(
   new SimpleSchema({
-    profileId: {
+    needer: {
       type: String,
-      label: "Profile Id",
-      optional: true
+      label: "Needer",
+      optional: false
     },
-    positionId: {
-      type: String,
-      label: "Position Id",
+    geo: {
+      type: GeoSchema,
       optional: true
     },
     tag: {
       type: String,
-      label: "Tag"
+      label: "Tag",
+      optional: true
+    },
+    rayon: {
+      type: Number,
+      optional: true
     }
   })
 );
 
 Wants.helpers({
-  needer: function() {
-    Profiles.findOne(this.profileId);
+  neederName: function() {
+    Users.findOne(this.needer).profile.name;
   },
   position: function() {
     Geos.findOne(this.positionId);
