@@ -11,7 +11,9 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
+
 					<a class="navbar-brand" href="/">iWant</a>
+					<span id="badge-counter" class="badge badge-success pull-right"><i class="fa fa-bell fa-3"></i>{{iWantsCounter}}</span>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -31,6 +33,32 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						{{#if currentUser}}
+							<!-- <li>
+									<a href="#"
+										data-html="true"
+										data-placement="bottom"
+										data-toggle="popover"
+										data-content="Notification 1<br/>Notification 2"
+										data-original-title="Notifications">
+										<i class="fa fa-bell fa-3"></i><span class="badge badge-success">{{iWantsCounter}}</span>
+									</a>
+							</li> -->
+							<li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-bell fa-3"></i><span class="badge badge-success">{{iWantsCounter}}</span></a>
+			          {{#if iWantsCounter}}
+
+									<ul class="dropdown-menu" role="menu">
+										{{#each wants}}
+											<li><a class="{{#if this.hasGiver}}accepted-want{{/if}}" href="{{ pathFor 'accept' _id=this._id }}">{{this.neederName}} | <b>{{tag}}</b></a></li>
+										{{/each}}
+
+				            <!-- <li><a href="#">Another action</a></li>
+				            <li><a href="#">Something else here</a></li>
+				            <li class="divider"></li>
+				            <li><a href="#">Separated link</a></li> -->
+				          </ul>
+			          {{/if}}
+			        </li>
 							<li id="user-drop-down" class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="{{pathFor 'profile'}}">
 									{{> avatar user=currentUser size="small"}}{{currentUserDisplayName}}
@@ -38,7 +66,7 @@
 								<ul class="dropdown-menu" role="menu">
 									<li>
 										<a href="{{pathFor 'wants'}}"><i class="fa fa-building fa-fw"></i>My iWants</a>
-									 </li>
+									</li>
 									<li class="divider"></li>
 									<!-- {{#if isInRole 'admin'}}
 										<li><a href="/admin"><i class="fa fa-cogs fa-fw"></i> Admin</a></li>
@@ -60,6 +88,7 @@
 									<li><a href="#" id="signOut"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a></li>
 								</ul>
 							</li>
+
 						{{else}}
 							<li class="{{isActiveRoute regex='signIn'}}"><a href="{{pathFor 'signIn'}}">Log In</a></li>
 							<li class="{{isActiveRoute regex='signUp'}}"><a href="{{pathFor 'signUp'}}">Sign Up</a></li>

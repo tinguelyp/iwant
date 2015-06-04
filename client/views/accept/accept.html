@@ -1,7 +1,19 @@
 <template name="accept">
     <div class="wrapper">
-      <div class="tags">
-        {{tag}}
+      <div class="row">
+        <div class="block-center text-center col-xs-2">
+          <i class="fa fa-times fa-6 text-danger ignore"></i>
+        </div>
+
+        <div class="col-xs-8">
+          <div class="tags text-center fa-6">
+            {{tag}}
+          </div>
+        </div>
+
+        <div class="col-xs-2 block-center text-center ">
+          <i class="fa fa-check fa-6 text-success ok"></i>
+        </div>
       </div>
 
       <div class="map" id="map">

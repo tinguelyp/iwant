@@ -10,7 +10,7 @@ UserProfileSchema = new SimpleSchema({
   tags: {
     type: String,
     label: "Tags",
-    optional: true
+    optional: false
     // autoform: {
     //   type: "selectize",
     //   afFieldInput: {

@@ -1,11 +1,15 @@
+Template.accept.events({
+  "click .ok": function(e, t){
+    console.log("ok");
+  },
+  "click .ignore": function(e, t){
+    console.log("ignore");
+  }
+});
+
 Template.accept.rendered = function() {
   //Enable swiping...
-  this.$(".wrapper").swipe({
-    //Generic swipe handler for all directions
-    swipeLeft: function(event, direction, distance, duration, fingerCount, fingerData) {
-      Router.go('chat')
-    }
-  });
+
 
   // Display Map
   L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images';
@@ -28,10 +32,17 @@ Template.accept.rendered = function() {
 
   Wants.find(this.data._id).observe({
     added: function(item) {
-      console.log("ITEM ADD");
       console.log(item);
       marker_needer = L.marker([item.geo.lat, item.geo.lng]).addTo(map); //TODO take position from yourself geolocalisation!
       marker_needer.bindPopup(L.popup().setContent('<p>'+Users.findOne(item.needer).profile.name+'</p>')).openPopup(); //TODO take name from needer profile
+
+      $(".wrapper").swipe({
+        //Generic swipe handler for all directions
+        swipeLeft: function(event, direction, distance, duration, fingerCount, fingerData) {
+          Router.go('chat', {_id: item._id})
+          Wants.update(item._id,{$set: {giver: Meteor.userId()}});
+        }
+      });
     }
   });
 

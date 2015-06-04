@@ -2,11 +2,11 @@ Template.chat_footer.events({
   "click [data-action='send-message']": function(e) {
     // Prevent default button click behavior
     e.preventDefault();
-
     // Insert the form data into the "Messages" collection
     Messages.insert({
       content: $("[content='content']").val(),
-      userId: Meteor.userId()
+      userId: Meteor.userId(),
+      wantId: Router.current().params._id
     });
 
     $("[content='content']").val("");
@@ -23,7 +23,8 @@ Template.chat_footer.events({
       // Insert the form data into the "Messages" collection
       Messages.insert({
         content: $("[content='content']").val(),
-        userId: Meteor.userId()
+        userId: Meteor.userId(),
+        wantId: Router.current().params._id
       });
 
       $("[content='content']").val("");

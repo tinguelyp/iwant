@@ -1,8 +1,9 @@
 Template.header.helpers({
-  profile: function() {
-    return Profiles.findOne({
-      userId: Meteor.userId()
-    });
+  wants: function() {
+    return Wants.find();
+  },
+  iWantsCounter: function () {
+    return Wants.find({},{}).count();
   }
 });
 

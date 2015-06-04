@@ -7,6 +7,15 @@ Wants.attachSchema(
       label: "Needer",
       optional: false
     },
+    giver: {
+      type: String,
+      label: "Giver",
+      optional: true
+    },
+    messages: {
+      type: MessageSchema,
+      optional: true
+    },
     geo: {
       type: GeoSchema,
       optional: true
@@ -25,7 +34,12 @@ Wants.attachSchema(
 
 Wants.helpers({
   neederName: function() {
-    Users.findOne(this.needer).profile.name;
+    console.log(this.needer);
+    return getUserName(Users.findOne(this.needer));//.profile.name;
+  },
+  hasGiver: function(){
+    console.log(this.giver);
+    return this.giver;
   },
   position: function() {
     Geos.findOne(this.positionId);
@@ -37,7 +51,7 @@ Wants.allow({
     return true;
   },
   update: function(userId, doc, fieldNames, modifier) {
-    return Roles.userIsInRole(userId, ['admin']) || (!_.contains(fieldNames, 'htmlDescription') && !_.contains(fieldNames, 'status') && userId && doc && userId === doc.userId);
+    return true;
   },
   remove: function(userId, doc) {
     return Roles.userIsInRole(userId, ['admin']) || (userId && doc && userId === doc.userId);
