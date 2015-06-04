@@ -76,13 +76,11 @@ Template.map.rendered = function() {
 //       }
 // });
 
-  var iWantIcon = L.icon({
-      iconUrl: 'images/favicons/favicon-32x32.png',
-      iconRetinaUrl: 'images/favicons/favicon-32x32.png',
-      iconSize: [32, 32],
-      iconAnchor: [22, 94],
-      popupAnchor: [-3, -76]
-  });
+  // var iWantIcon = L.icon({
+  //     iconUrl: 'images/favicons/favicon-32x32.png',
+  //     iconRetinaUrl: 'images/favicons/favicon-32x32.png'
+      
+  // });
 
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
@@ -108,7 +106,8 @@ Template.map.rendered = function() {
     if (init_pos) {
       latlng.lat = event.latitude;
       latlng.lng = event.longitude;
-      L.marker([event.latitude, event.longitude], {icon: iWantIcon}).addTo(map);
+      // L.marker([event.latitude, event.longitude], {icon: iWantIcon}).addTo(map);
+      L.marker([event.latitude, event.longitude]).addTo(map);
       circle = L.circle([event.latitude, event.longitude], circle_size).addTo(map);
       console.log(circle);
       Session.set('lat', latlng.lat);
