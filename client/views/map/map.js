@@ -20,7 +20,8 @@ var submitWant = function(event, template){
   console.log($('#iWantTag').val());
   Wants.insert({needer: Meteor.userId(), tag: $('#iWantTag').val().toLowerCase(), rayon: Session.get('rayon'), geo: {lat: Session.get('lat'), lng: Session.get('lng')}});
   $('#iWantTag').val('');
-  // Router.go("/newTag");
+	Session.set("flash", 'iWants well created');
+  Router.go("/");
 }
 
 var enterWant = function(event){
@@ -79,7 +80,7 @@ Template.map.rendered = function() {
   // var iWantIcon = L.icon({
   //     iconUrl: 'images/favicons/favicon-32x32.png',
   //     iconRetinaUrl: 'images/favicons/favicon-32x32.png'
-      
+
   // });
 
   L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
@@ -99,7 +100,7 @@ Template.map.rendered = function() {
     // timeout: 3000
   });
 
- 
+
 
   map.on('locationfound', function(event) {
     console.log(event);
@@ -121,7 +122,7 @@ Template.map.rendered = function() {
     // alert("Location access denied.")
   });
 
-  $mc = $('#map');
+  // $mc = $('#map');
   // $mc.css('height', '100vh');
   map.invalidateSize();
 
@@ -162,7 +163,7 @@ Template.map.rendered = function() {
   //   $mc.css('height', '100vh');
   // }).resize();
 
-  this.$(".map").swipe({
+  this.$(".map-map").swipe({
 
     swipeUp: function(event, direction, distance, duration, fingerCount, fingerData) {
       changeCircle("up");

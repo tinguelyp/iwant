@@ -32,13 +32,16 @@ Wants.attachSchema(
   })
 );
 
+
+Wants.before.insert(function (userId, doc) {
+  doc.createdAt = moment().toDate();
+});
+
 Wants.helpers({
   neederName: function() {
-    console.log(this.needer);
     return getUserName(Users.findOne(this.needer));//.profile.name;
   },
   hasGiver: function(){
-    console.log(this.giver);
     return this.giver;
   },
   position: function() {

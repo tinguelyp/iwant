@@ -1,16 +1,27 @@
 <template name="home">
 	{{#if currentUser}}
 
+		{{#if flash}}
+			<div class="alert alert-success fade in">
+				<button class="close" data-dismiss="alert">×</button>
+				{{flash}}
+			</div>
+		{{/if}}
+
 		<div class="container text-center">
 			<div class="row">
-				<div class="col-xs-6 needer bg-info">
-					<a href="{{pathFor 'map'}}"><i class="fa fa-building fa-fw"></i>Something</a>
-					<!-- {{>jobsRecent}} -->
-				</div>
-				<div class="col-xs-6 giver bg-success">
-					To give
-					<!-- {{>profilesRecent}} -->
-				</div>
+				<a href="{{pathFor 'map'}}">
+					<div class="col-xs-6 needer bg-info">
+						<i class="fa fa-gift fa-8"></i><br><span class="homeFont">something</span><br>
+						<!-- {{>jobsRecent}} -->
+					</div>
+				</a>
+				<a href="{{pathFor 'wants'}}">
+					<div class="col-xs-6 giver bg-success">
+						<i class="fa fa-comments-o fa-8"></i><br><span class="homeFont">to give</span><br>
+						<!-- {{>profilesRecent}} -->
+					</div>
+				</a>
 			</div>
 		</div>
 	{{else}}

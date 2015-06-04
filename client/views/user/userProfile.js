@@ -15,6 +15,7 @@ Template.userProfile.events({
 	'click #cancel':function(event, template){
 		event.preventDefault();
     	Modal.hide("userProfile");
+			Router.go("home");
 	}
 });
 

@@ -7,13 +7,16 @@
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+						{{#if iWantsCounter}}
+							<span id="badge-counter" class="badge badge-success pull-right"><i class="fa fa-bell fa-3"></i>{{iWantsCounter}}</span>
+						{{else}}
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						{{/if}}
 					</button>
 
 					<a class="navbar-brand" href="/">iWant</a>
-					<span id="badge-counter" class="badge badge-success pull-right"><i class="fa fa-bell fa-3"></i>{{iWantsCounter}}</span>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,7 +52,7 @@
 
 									<ul class="dropdown-menu" role="menu">
 										{{#each wants}}
-											<li><a class="{{#if this.hasGiver}}accepted-want{{/if}}" href="{{ pathFor 'accept' _id=this._id }}">{{this.neederName}} | <b>{{tag}}</b></a></li>
+											<li><a class="{{#if this.hasGiver}}accepted-want{{/if}}" href="{{#if this.hasGiver}}{{ pathFor 'chat' _id=this._id }}{{else}}{{ pathFor 'accept' _id=this._id }}{{/if}}">{{this.neederName}} | <b>{{tag}}</b> {{#if this.hasGiver}}<i class="fa fa-comment fa-3"></i>{{/if}}</a></li>
 										{{/each}}
 
 				            <!-- <li><a href="#">Another action</a></li>
@@ -65,7 +68,7 @@
 								</a>
 								<ul class="dropdown-menu" role="menu">
 									<li>
-										<a href="{{pathFor 'wants'}}"><i class="fa fa-building fa-fw"></i>My iWants</a>
+										<a href="{{pathFor 'wants'}}"><i class="fa fa-gift fa-fw"></i>My iWants</a>
 									</li>
 									<li class="divider"></li>
 									<!-- {{#if isInRole 'admin'}}

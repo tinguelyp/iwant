@@ -12,6 +12,17 @@ Router.configure({
   progressSpinner: false,
   waitOn: function() {
     return subs.subscribe('notif');
+  },
+  data: function(){
+    return {
+      wants: Wants.find({
+
+      },{
+        $sort: {
+          giver: -1
+        }
+      })
+    }
   }
 });
 
@@ -123,6 +134,12 @@ Router.map(function() {
   });
 
 }); // END OF Router.map(function() {
+
+
+Router.onBeforeAction(AccountsTemplates.ensureSignedIn, {
+  only: ['chat', 'wants', 'profile', 'map']
+});
+
 
 Router.plugin('dataNotFound', {
   notFoundTemplate: 'notFound'

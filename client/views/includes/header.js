@@ -7,6 +7,16 @@ Template.header.helpers({
   }
 });
 
+Template.header.rendered = function(){
+  this.autorun(function(){
+    Wants.find();
+    Router.current().subscribe('notif');
+    // var data = Router.current().data();
+    // console.log(data);
+    // console.log(Wants.find())
+  });
+}
+
 Template.header.events({
   'click #signOut': function(event, template) {
     Meteor.logout();

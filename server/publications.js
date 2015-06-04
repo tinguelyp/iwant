@@ -54,9 +54,22 @@ Meteor.publish("notif", function() {
   check(arguments, [Match.Any]);
   if (this.userId) {
     return [
-      Wants.find({'tag': { $in : Users.findOne({_id: this.userId}).profile.tags.split(",") }}, {
-        sort: {
-          randomSorter: 1
+      Wants.find(
+        { $or: [
+          { $and: [
+            { needer: { $ne: this.userId } },
+            { giver: this.userId }
+          ]},
+          { $and: [
+            { 'tag': { $in : Users.findOne({_id: this.userId}).profile.tags.split(",") } },
+            { giver: null }
+          ]}
+          ,
+          { needer: this.userId }
+        ]}
+    , {
+        $sort: {
+          createdAt: -1
         }
       }),
       Users.find({})
