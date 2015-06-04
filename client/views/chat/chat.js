@@ -44,8 +44,8 @@ Template.chat_footer.events({
 
 Template.chat.rendered = function() {
 
-  $("#content-wrapper").animate({
-    scrollTop: $('#content-wrapper')[0].scrollHeight
+  $(".content-chat").animate({
+    scrollTop: $('.content-chat')[0].scrollHeight
   }, 1000);
 
   this.find('.content-chat')._uihooks = {
@@ -55,8 +55,8 @@ Template.chat.rendered = function() {
         .insertBefore(next)
         .slideDown(200);
 
-      $("#content-wrapper").animate({
-        scrollTop: $('#content-wrapper')[0].scrollHeight
+      $(".content-chat").animate({
+        scrollTop: $('.content-chat')[0].scrollHeight
       }, 1000);
     },
 
