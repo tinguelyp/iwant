@@ -6,3 +6,9 @@ Template.home.helpers({
     return Session.get("flash");
   }
 });
+
+Template.home.events({
+  "click #to_give": function(e, t){
+    Modal.show('userProfile');
+  }
+});
